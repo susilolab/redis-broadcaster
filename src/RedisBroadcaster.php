@@ -11,7 +11,7 @@
  * @author Agus Susilo
  * @copyright (C)2017 Agus Susilo
  */
-namespace mifta\components\broadcasting;
+namespace mifta;
 
 class RedisBroadcaster extends \yii\base\Component
 {
