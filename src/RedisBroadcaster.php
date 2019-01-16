@@ -41,8 +41,9 @@ class RedisBroadcaster extends \yii\base\Component
 	 *
 	 * @return Predis\Client
 	 */
-	public function connect() {
-		if(self::$client == null) {
+	public function connect()
+	{
+		if (self::$client == null) {
 			self::$client = new \Predis\Client([
 	            'schema' => 'tcp',
 	            'host'   => '127.0.0.1',
@@ -57,7 +58,8 @@ class RedisBroadcaster extends \yii\base\Component
 	 *
 	 * @return Predis\Client
 	 */
-	public function getClient() {
+	public function getClient()
+	{
 		return self::$client;
 	}
 
@@ -67,13 +69,14 @@ class RedisBroadcaster extends \yii\base\Component
 	 * @param mixed $payload data yang dikirim ke server
 	 * @param int $dataType
 	 */
-	public function broadcast($payload, $dataType=1) {
+	public function broadcast($payload, $dataType = 1)
+	{
 		$data = $this->getData($payload, $dataType);
 
 		$this->eventName = 'broadcast';
-		if($dataType == self::DATA_BINARY) {
+		if ($dataType == self::DATA_BINARY) {
 			$this->eventName = 'broadcastbin';
-		}elseif($dataType == self::DATA_JSON) {
+		} elseif ($dataType == self::DATA_JSON) {
 			$this->eventName = 'broadcastjson';
 		}
 
@@ -98,13 +101,14 @@ class RedisBroadcaster extends \yii\base\Component
 	 * @param int $dataType tipe data
 	 * @return void
 	 */
-	public function roomcast($roomName, $payload, $dataType=1) {
+	public function roomcast($roomName, $payload, $dataType = 1)
+	{
 		$data = $this->getData($payload, $dataType);
 
 		$this->eventName = 'roomcast';
-		if($dataType == self::DATA_BINARY) {
+		if ($dataType == self::DATA_BINARY) {
 			$this->eventName = 'roomcastbin';
-		}elseif($dataType == self::DATA_JSON) {
+		} elseif ($dataType == self::DATA_JSON) {
 			$this->eventName = 'roomcastjson';
 		}
 
@@ -127,12 +131,13 @@ class RedisBroadcaster extends \yii\base\Component
 	 * @param int $dataType tipe data
 	 * @return mixed data sesuai tipe datanya
 	 */
-	protected function getData($payload, $dataType=1) {
+	protected function getData($payload, $dataType = 1)
+	{
 		$data = '';
-		if($dataType == self::DATA_STRING) {
+		if ($dataType == self::DATA_STRING) {
 			$data = base64_encode($payload);
-		}elseif($dataType == self::DATA_BINARY) {
-		}elseif($dataType == self::DATA_JSON) {
+		} elseif ($dataType == self::DATA_BINARY) {
+		} elseif ($dataType == self::DATA_JSON) {
 			$data = json_encode($payload);
 			$data = base64_encode($data);
 		}
